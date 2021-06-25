@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>
+
+        <%=locals.title %>
+    
+    </title>
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    
+
+    <h1 style="text-align: center;"><i class="fas fa-book-medical"></i>&nbspRoyal Pharma | Home</h1>
+
+    <h3 style="text-align: center;"> Medicines Supplied</h3>
+    <div>
+    <ul type ="None">
+    <% for(let i of medicines){ %>
+
+        <li>
+            <span> <%=i.Name%> </span>
+            <span class="add-padding"> <%=i.Company%>&nbsp;&nbsp;
+                <a href = "/delete-med/?id=<%= i._id%>">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </span>
+        </li>
+
+
+    <%  } %>
+    </div>
+    <form action="/new-med" method="POST">
+
+        <input name="Name" type="text" required placeholder="Enter Name of medicine">
+        <input name="Company" type="text" required  placeholder="Enter name of company">
+        <p>
+        <button type="submit">Add medicine</button>
+        </p>
+    </form>
+    </ul>
+</body>
+</html>
