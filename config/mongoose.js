@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb://localhost/Med-list");
+mongoose.connect("mongodb://localhost/Med-list",{useUnifiedTopology: true}); ///<<<<<--------- to resolve deprecation warning being displayed on the terminal
 
 const db = mongoose.connection;
 

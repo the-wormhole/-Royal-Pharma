@@ -16,7 +16,7 @@ module.exports.home = function(req,res){
 module.exports.destroy = function(req,res){
 
     let id = req.query.id;
-    console.log(typeof(id));
+    //console.log(typeof(id));
     Med.findByIdAndDelete(id,function(err){
         if(err){console.log("Error in deleting the Medicine from DB"); return;}
 
