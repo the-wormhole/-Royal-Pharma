@@ -2,13 +2,16 @@ const Med = require('../models/medicine');
 
 module.exports.home = function(req,res){
 
+     console.log(req.cookies);
+    // res.cookie('customer', 1);           //<<<<<<<<<<<---------------Altering Cookie from server side
     Med.find({},function(err,medicines){
 
         if(err){console.log('Error in loading contacts!!'); return;};
         
-        res.render("home",{
+        return res.render("home",{
             title:"Royal Pharma",
-            medicines: medicines
+            medicines: medicines,
+            header:"Solution to all miseries"
         });
     })
 }

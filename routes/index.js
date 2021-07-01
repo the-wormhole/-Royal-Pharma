@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-//const db = require('../config/mongoose');
-//const Med = require('../models/medicine');
 
 const homeController = require('../controllers/homecontroller');
 
@@ -11,6 +9,6 @@ router.post('/new-med',homeController.create);
 
 router.get('/delete-med/',homeController.destroy);
 
-router.use('/sign-in',require('./user'));
+router.use('/customer',require('./customer'));
 
 module.exports = router;

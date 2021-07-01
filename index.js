@@ -1,4 +1,5 @@
 const port = 8000;
+const cookieParser = require('cookie-parser');
 const express = require('express');
 //const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
@@ -9,9 +10,11 @@ const db = require('./config/mongoose');
 const app = express();
 const router = require('./routes/index');
 
+app.use(express.urlencoded());                ///<<<<<------------------ this is a parser that puts form data into req.body
+app.use(cookieParser());
+
 app.set('view engine','ejs');
 app.set('views','./views');
-app.use(express.urlencoded());                ///<<<<<------------------ this is a parser that puts form data into req.body   
 
 app.use(express.static('assets'));
 
