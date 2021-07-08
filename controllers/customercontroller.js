@@ -15,6 +15,27 @@ module.exports.signUp = function(req,res){
     });
 }
 
+module.exports.customerProfile = function(req,res){
+    
+    if(req.cookies.customer_id){
+        Customer.findOne({_id:req.cookies.customer_id},function(err,customer){
+            if(err){console.log('Error in finding customer by cookie!!');}
+
+            if(customer){
+                return res.render('customer_profile',{
+                    header:'Profile page',
+                    customer_name:customer.Name,
+                    customer:customer
+                })
+            }else{
+                return res.redirect('/customer/sign-in');
+            }
+        })
+    }else{
+            return res.redirect('/customer/sign-in');
+    }
+}
+
 module.exports.create = function(req,res){
      //console.log(req.body['confirm-password']);
     if(req.body.password != req.body['confirm-password']){
@@ -51,4 +72,23 @@ module.exports.create = function(req,res){
 module.exports.createSession = function(req,res){
 
     //Karegey
+    Customer.findOne({Email:req.body.Email},function(err,customer){
+        if(err){console.log('Error in Signing in the customer!!');}
+
+        if(customer){
+            console.log('Customer found!!');
+            if(customer.password == req.body.password){
+
+                res.cookie('customer_id',customer.id);
+                //res.locals('customer',customer);
+                return res.redirect('/customer/customer-profile');
+            }else{
+                console.log('Incorrect password');
+                return res.redirect('back');
+            }
+        }else{
+            console.log('Customer not found!!');
+            return res.redirect('back');
+        }
+    })
 }

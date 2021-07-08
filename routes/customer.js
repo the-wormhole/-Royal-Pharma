@@ -8,4 +8,6 @@ router.get('/sign-up',customerController.signUp);
 router.post('/create',customerController.create);
 router.post('/create-session',customerController.createSession);
 
+router.get('/customer-profile',customerController.customerProfile);
+
 module.exports = router;

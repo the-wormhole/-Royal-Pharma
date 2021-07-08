@@ -2,7 +2,7 @@ const Med = require('../models/medicine');
 
 module.exports.home = function(req,res){
 
-     console.log(req.cookies);
+     //console.log(req.cookies);
     // res.cookie('customer', 1);           //<<<<<<<<<<<---------------Altering Cookie from server side
     Med.find({},function(err,medicines){
 
