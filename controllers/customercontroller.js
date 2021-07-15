@@ -1,14 +1,31 @@
 const Customer = require('../models/customer');
 //const homeController = require('./homecontroller');
 
+module.exports.profile = function(req,res){
+    
+    return res.render('customer_profile',{
+
+        customer_name:"Hello customer!!",
+        header:"Solution to all your miseries",
+        //customer:customer
+    });
+}
+
 module.exports.signIn = function(req,res){
 
+    if(req.isAuthenticated()){
+        return res.redirect('/customer/profile');
+    }
     return res.render('customer_sign-in',{
         header:"Solution to all your miseries"
     });
 }
 
 module.exports.signUp = function(req,res){
+
+    if(req.isAuthenticated()){
+        return res.redirect('/customer/profile');
+    }
 
     return res.render('customer_sign-up',{
         header:"Solution to all your miseries"
@@ -50,5 +67,11 @@ module.exports.create = function(req,res){
 
 module.exports.createSession = function(req,res){
 
-    //Karegey
+    return res.redirect('/');
+}
+
+module.exports.destroySession = function(req,res){
+
+    req.logout();                                   //<<<<<<<<----------- This function is supplied by passport into the req
+    return res.redirect('/');
 }

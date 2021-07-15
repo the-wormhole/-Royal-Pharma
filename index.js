@@ -7,6 +7,13 @@ const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
 //const Med = require('./models/medicine');
 
+//Used for passport local authentication
+const session = require('express-session');     ///<<<---- encrypts the session cookie
+const passport = require('passport');
+const passportLocalStrategy = require('./config/passport-local-strategy');
+const MongoStore = require('connect-mongo')(session);           //<<<<<<<<<------- Used to store session cookie in the DB
+
+
 const app = express();
 const router = require('./routes/index');
 
@@ -21,6 +28,29 @@ app.use(express.static('assets'));
 app.use(expressLayouts);
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);        ///<<<<<----------------- detects script andd styles in a page and puts it in the right position in the layout page
+
+app.use(session({
+    name:'Medi_id',
+    secret: 'anything',                     ////<<<<<<------------------ Change the session cookie before Deployment ~~~~ IMPORTANT
+    saveUninitialized:false,
+    resave:false,
+    cookie:{
+        maxAge: (1000 * 60 * 100)
+    },
+    store:new MongoStore({
+
+        mongooseConnection: db,
+        autoRemove: 'disabled'
+    },function(err){
+        console.log(err+"Error in setting up mongostore!!!"|| 'connect-mongodb server setup ok')
+    }
+    )
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(passport.setAuthenticatedUser);
 
 app.use('/',router);                         ///<<<<<-------------------- router middleware for all routes
 
