@@ -3,7 +3,7 @@ const router = express.Router();
 
 const homeController = require('../controllers/homecontroller');
 
-router.get('/',homeController.home);
+router.get('/',homeController.homePosts);
 
 router.post('/new-med',homeController.create);
 

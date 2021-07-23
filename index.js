@@ -12,11 +12,20 @@ const session = require('express-session');     ///<<<---- encrypts the session 
 const passport = require('passport');
 const passportLocalStrategy = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongo')(session);           //<<<<<<<<<------- Used to store session cookie in the DB
-
+const sassMiddleware = require('node-sass-middleware');
 
 const app = express();
 const router = require('./routes/index');
 
+app.use(sassMiddleware({
+
+    src:'./assets/scss',
+    dest:'./assets/css',
+    debug: true,                        //<<-- To display if there were any errors while coonversion in the console
+    outputStyle: 'extended',        //<<--- Do we wish to see the converted scss to css in extended format or single line 
+    prefix:'/css'       //<<-- Where to look for CSS files
+    
+}))
 app.use(express.urlencoded());                ///<<<<<------------------ this is a parser that puts form data into req.body
 app.use(cookieParser());
 

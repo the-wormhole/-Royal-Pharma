@@ -15,7 +15,15 @@ module.exports.home = function(req,res){
         });
     })
 }
+module.exports.homePosts = function(req,res){
 
+    console.log(req.cookies);
+   // res.cookie('customer', 1);           //<<<<<<<<<<<---------------Altering Cookie from server side
+    return res.render("home_posts",{
+        title:" MediBook feed",
+        header:"Solution to all miseries"
+    })
+}
 module.exports.destroy = function(req,res){
 
     let id = req.query.id;
