@@ -1,4 +1,6 @@
 const Med = require('../models/medicine');
+const Post = require('../models/post');
+const Customer = require('../models/customer');
 
 module.exports.home = function(req,res){
 
@@ -6,7 +8,7 @@ module.exports.home = function(req,res){
     // res.cookie('customer', 1);           //<<<<<<<<<<<---------------Altering Cookie from server side
     Med.find({},function(err,medicines){
 
-        if(err){console.log('Error in loading contacts!!'); return;};
+        if(err){console.log('Error in loading medicine list!!'); return;};
         
         return res.render("home",{
             title:"Royal Pharma",
@@ -15,14 +17,32 @@ module.exports.home = function(req,res){
         });
     })
 }
+
+
 module.exports.homePosts = function(req,res){
 
-    console.log(req.cookies);
+    //console.log(req.cookies);
    // res.cookie('customer', 1);           //<<<<<<<<<<<---------------Altering Cookie from server side
-    return res.render("home_posts",{
+//    Post.find({},function(err,posts){
+//        if(err){console.log('Error in loading posts!!');return;}
+
+//        return res.render("home_posts",{
+//         title:" MediBook feed",
+//         header:"Solution to all miseries",
+//         posts:posts
+//     });
+//    })
+
+   Post.find({}).populate('customer').exec(function(err,posts){             //<<<--------- pre populating the user from its customer_id in the database to display it on the home page
+    if(err){console.log('Error in loading posts!!',err);return;}
+
+        return res.render("home_posts",{
         title:" MediBook feed",
-        header:"Solution to all miseries"
-    })
+        header:"Solution to all miseries",
+        posts:posts
+        })
+    });
+    
 }
 module.exports.destroy = function(req,res){
 

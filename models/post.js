@@ -7,10 +7,18 @@ const postSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    user:{
+    customer:{
 
-        type:mongoose.Schema.Types.ObjectId
-    }
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'customer'                     // <<--- Don't forget reference, makes pre populating from DB less ambigious
+    },
+
+        //  Include the array of comments in the posts
+    comments:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Comment'
+        }
+    ]
 },{timestamps:true})
 
 const Post = mongoose.model('Post',postSchema);

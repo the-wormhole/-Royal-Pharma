@@ -11,4 +11,8 @@ router.get('/delete-med/',homeController.destroy);
 
 router.use('/customer',require('./customer'));
 
+router.use('/posts',require('./posts'));
+
+router.use('/comments',require('./comments'));
+
 module.exports = router;

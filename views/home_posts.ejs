@@ -1,10 +1,35 @@
 
 <h1> <%= title %></h1>
 <section>
-    
-    <form action="" method="POST" id = "new-post-form">
+    <!-- To show the form only if user is Authenticated -->
+    <% if(locals.customer){%>  
+    <form action="/posts/create" method="POST" id = "new-post-form">
         <textarea name="content" cols="30" rows = "3" placeholder="Type Here..."></textarea>
         <input type="submit" value="Post">
     </form>
+    <% } %>
+<div id="posts_container">
+    <ul>
+       <% for(var post of posts){%>
+        <li>
+            <p>
+                <%= post.customer.Name %><br>
+                <%= post.content %>
 
+            </p>
+            <div class="post-comments">
+                <% if(locals.customer){%>
+                <form action="/comments/create" method="POST" id = "new-comment-form">
+                    <textarea name="content" cols="30" rows = "3" placeholder="Type your comment here..."></textarea>
+                    <input type="hidden" name="post" value="<%= post._id %>">
+                    <input type="submit" value="Comment">
+                </form>
+                <%}%>
+            </div>
+
+        </li>
+
+       <%}%> 
+    </ul>
+</div>
 </section>
