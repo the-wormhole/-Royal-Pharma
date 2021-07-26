@@ -33,7 +33,15 @@ module.exports.homePosts = function(req,res){
 //     });
 //    })
 
-   Post.find({}).populate('customer').exec(function(err,posts){             //<<<--------- pre populating the user from its customer_id in the database to display it on the home page
+Post.find({})
+   .populate('customer')
+   .populate({
+       path: 'comments',
+       populate:{
+           path: 'customer'
+       }
+   })
+   .exec(function(err,posts){             //<<<--------- pre populating the user from its customer_id in the database to display it on the home page
     if(err){console.log('Error in loading posts!!',err);return;}
 
         return res.render("home_posts",{
