@@ -1,0 +1,11 @@
+body {
+  margin: 0; }
+
+header {
+  background-color: green;
+  color: white; }
+  header .info {
+    display: flex;
+    justify-content: space-between; }
+    header .info ul li {
+      display: inline-block; }

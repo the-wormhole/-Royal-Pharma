@@ -1,0 +1,19 @@
+body{
+    margin:0;
+}
+#home-container{
+    display: flex;
+    height: 100%;
+    h1{
+        font-size: 2rem;
+    }
+    #feed-posts{
+        width:70%;
+        padding: 0 10px;
+    }
+    #all-customer-profiles{
+        width: 30%;
+        border-left: 1px solid black;
+        padding: 0 10px;
+    }
+}

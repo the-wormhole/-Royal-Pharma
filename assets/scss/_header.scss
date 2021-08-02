@@ -1,4 +1,16 @@
+body{
+    margin:0;
+}
 header{
-    display:flex;
-    color:green
+
+    background-color: green;
+    color:white;
+    .info{
+        display:flex;
+        justify-content: space-between;
+        ul li{
+            display:inline-block;
+            // justify-content: space-between;
+        }
+    }
 }

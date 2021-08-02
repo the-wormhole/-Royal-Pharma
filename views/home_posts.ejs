@@ -1,29 +1,33 @@
+<link rel="stylesheet" href="/css/home_posts.css">
 
-<h1> <%= title %></h1>
-<section>
-    <!-- To show the form only if user is Authenticated -->
-    <% if(locals.customer){%>  
-    <form action="/posts/create" method="POST" id = "new-post-form">
-        <textarea name="content" cols="30" rows = "3" placeholder="Type Here..."></textarea>
-        <input type="submit" value="Post">
-    </form>
-    <% } %>
-<div id="posts_container">
-    <ul>
-       <% for(var post of posts){%>
+<section id ="home-container">
+    <section id="feed-posts">
+        <h1> <%= title %></h1>
+        <!-- To show the form only if user is Authenticated -->
+        <% if(locals.customer){%>  
+        <form action="/posts/create" method="POST" id = "new-post-form">
+            <textarea name="content" cols="30" rows = "3" placeholder="Type Here..."></textarea>
+            <input type="submit" value="Post">
+        </form>
+        <% } %>
+        <div id="posts_container">
+            <ul>
+            <% for(var post of posts){%>
 
-            <%- include('_posts', {post: post}) -%>
-       <%}%> 
-    </ul>
-</div>
+                    <%- include('_posts', {post: post}) -%>
+            <%}%> 
+            </ul>
+        </div>
+    </section>
+
+    <div id="all-customer-profiles">
+        <h2>Other Customers</h2>
+        <% for(customer of all_customers){ %> 
+        <ul type="none">
+            <li>
+                <a href="/customer/profile/<%= customer.id %>"><%= customer.Name %></a>
+            </li>
+        </ul>
+        <% } %>
+    </div>
 </section>
-
-<div id="all-customer-profiles">
-    <% for(customer of all_customers){ %> 
-    <ul>
-        <li>
-            <a href="/customer/profile/<%= customer.id %>"><%= customer.Name %></a>
-        </li>
-    </ul>
-    <% } %>
-</div>
