@@ -2,19 +2,22 @@ const Customer = require('../models/customer');
 //const homeController = require('./homecontroller');
 
 module.exports.profile = function(req,res){
-    
-    return res.render('customer_profile',{
+    Customer.findById(req.params.id,function(err,customer){
+        return res.render('customer_profile',{
 
-        customer_name:"Hello customer!!",
-        header:"Solution to all your miseries",
-        //customer:customer
+            customer_name:"Hello customer!!",
+            header:"Solution to all your miseries",
+            profile_customer: customer
+            //customer:customer
+        });
     });
+
 }
 
 module.exports.signIn = function(req,res){
 
     if(req.isAuthenticated()){
-        return res.redirect('/customer/profile');
+        return res.redirect(`/customer/profile/${req.user.id}`);
     }
     return res.render('customer_sign-in',{
         header:"Solution to all your miseries"
@@ -24,7 +27,7 @@ module.exports.signIn = function(req,res){
 module.exports.signUp = function(req,res){
 
     if(req.isAuthenticated()){
-        return res.redirect('/customer/profile');
+        return res.redirect(`/customer/profile/${req.user.id}`);
     }
 
     return res.render('customer_sign-up',{
@@ -63,6 +66,18 @@ module.exports.create = function(req,res){
         } 
     })
     
+}
+
+module.exports.update = function(req,res){
+
+    let id = req.params.id;
+    if(req.user.id == id){
+        Customer.findByIdAndUpdate(id,req.body,function(err,customer){
+            return res.redirect('back');
+        });
+    }else{
+        return res.status(401).send('Unauthorised');
+    }
 }
 
 module.exports.createSession = function(req,res){

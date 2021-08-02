@@ -15,4 +15,6 @@ router.use('/posts',require('./posts'));
 
 router.use('/comments',require('./comments'));
 
+router.get('/list',homeController.home);
+
 module.exports = router;

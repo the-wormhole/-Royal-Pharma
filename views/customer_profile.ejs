@@ -1,2 +1,12 @@
-<h3> Welcome!! <%= customer.Name %></h3>
-<h4> <%= customer.Email%></h4>
+<% if(locals.customer.id == profile_customer.id){ %>
+<h3> Welcome!! <%= profile_customer.Name %></h3>
+<form action="/customer/update/<%= profile_customer.id %>" method="POST" > 
+    Name : <input type = "text" placeholder="Your name.." value="<%= profile_customer.Name%>" name="Name" required><br>
+    Email: &nbsp;<input type = "email" placeholder="Your Email.." value="<%= profile_customer.Email%>" name="Email" required><br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit">Update</button>
+</form>
+<%}else{%>
+<h3> <%= profile_customer.Name %></h3>
+<% }%>
+
+<h4> <%= profile_customer.Email%></h4>

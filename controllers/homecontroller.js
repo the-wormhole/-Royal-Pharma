@@ -44,11 +44,16 @@ Post.find({})
    .exec(function(err,posts){             //<<<--------- pre populating the user from its customer_id in the database to display it on the home page
     if(err){console.log('Error in loading posts!!',err);return;}
 
-        return res.render("home_posts",{
-        title:" MediBook feed",
-        header:"Solution to all miseries",
-        posts:posts
-        })
+        Customer.find({},function(err,customers){
+
+            return res.render("home_posts",{
+                title:" MediBook feed",
+                header:"Solution to all miseries",
+                posts:posts,
+                all_customers: customers
+                })
+        });
+
     });
     
 }

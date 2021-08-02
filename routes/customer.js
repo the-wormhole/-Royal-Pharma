@@ -3,11 +3,13 @@ const router = express.Router();
 const customerController = require('../controllers/customercontroller');
 const passport = require('passport');
 
-router.get('/profile', passport.checkAuthentication ,customerController.profile)
+router.get('/profile/:id', passport.checkAuthentication ,customerController.profile)
 router.get('/sign-in',customerController.signIn);
 router.get('/sign-up',customerController.signUp);
 
+
 router.post('/create',customerController.create);
+router.post('/update/:id',passport.checkAuthentication,customerController.update);
 router.get('/sign-out',customerController.destroySession);
 
 // Using passport middleware for authentication

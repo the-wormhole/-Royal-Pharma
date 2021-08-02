@@ -1,12 +1,13 @@
+<link rel = "stylesheet" href="/css/_header.scss">
 <header>
     Royal Pharma 
         <small><%= header %></small>
-
-        <ul type="none">
+        <h2> Medi Book</h2>
+        <ul type="none" class="horizontal-list">
             <% if(locals.customer){%>           <!-- Here, locals.customer and customer are the same, but to prevent the system from crashing we 
                                                         use locals.customer since it would only return null and not crash the App by saying 
                                                         undefined customer-->
-                <li><a href="/customer/profile"><%=customer.Name%></a></li>
+                <li><a href="/customer/profile/<%= customer.id %>"><%=customer.Name%></a></li>
                 <a href="/customer/sign-out"><li>
                     Sign Out  
                 </li></a>
@@ -14,5 +15,6 @@
                 <li><a href="/customer/sign-in">Sign in</a></li>
                 <li><a href="/customer/sign-up">Sign Up</a></li>
             <%}%>
+                <li><a href = "/list">Medicine list</a></li>
         </ul>
 </header>
