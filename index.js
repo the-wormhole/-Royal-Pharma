@@ -13,6 +13,7 @@ const passport = require('passport');
 const passportLocalStrategy = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongo')(session);           //<<<<<<<<<------- Used to store session cookie in the DB
 const sassMiddleware = require('node-sass-middleware');
+const flash = require('connect-flash');
 
 const app = express();
 const router = require('./routes/index');
@@ -58,6 +59,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());                             ///<<<<------------------  With the flash middleware in place, all requests will have a req.flash() function that can be used for flash messages.
 
 app.use(passport.setAuthenticatedUser);
 

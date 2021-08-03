@@ -3,20 +3,20 @@
     Royal Pharma 
         <small><%= header %></small>
         <div class ="info">
-            <h2> Medi Book</h2>
+            <a href='/' style="color: aliceblue; text-decoration: none;"><h2> Medi Book</h2></a>
             <ul type="none" class="horizontal-list">
                 <% if(locals.customer){%>           <!-- Here, locals.customer and customer are the same, but to prevent the system from crashing we 
                                                             use locals.customer since it would only return null and not crash the App by saying 
                                                             undefined customer-->
-                    <li><a href="/customer/profile/<%= customer.id %>"><%=customer.Name%></a></li>
-                    <a href="/customer/sign-out"><li>
+                    <li><a href="/customer/profile/<%= customer.id %> " style="color: aliceblue; text-decoration: none;"><%=customer.Name%></a></li>
+                    <a href="/customer/sign-out" style="color: aliceblue; text-decoration: none;"><li>
                         Sign Out  
                     </li></a>
                 <%}else{%>
-                    <li><a href="/customer/sign-in">Sign in</a></li>
-                    <li><a href="/customer/sign-up">Sign Up</a></li>
+                    <li><a href="/customer/sign-in" style="color: aliceblue; text-decoration: none;">Sign in</a></li>
+                    <li><a href="/customer/sign-up" style="color: aliceblue; text-decoration: none;">Sign Up</a></li>
                 <%}%>
-                    <li><a href = "/list">Medicine list</a></li>
+                    <li><a href = "/list" style="color: aliceblue; text-decoration: none;">Medicine list</a></li>
             </ul>
         </div>
 </header>

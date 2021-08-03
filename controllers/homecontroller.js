@@ -19,7 +19,7 @@ module.exports.home = function(req,res){
 }
 
 
-module.exports.homePosts = function(req,res){
+module.exports.homePosts = async function(req,res){
 
     //console.log(req.cookies);
    // res.cookie('customer', 1);           //<<<<<<<<<<<---------------Altering Cookie from server side
@@ -32,8 +32,8 @@ module.exports.homePosts = function(req,res){
 //         posts:posts
 //     });
 //    })
-
-Post.find({})
+            // Without async-await
+/*Post.find({})
    .populate('customer')
    .populate({
        path: 'comments',
@@ -55,7 +55,35 @@ Post.find({})
         });
 
     });
-    
+*/
+
+// to avoid call back hell we use async-await 
+
+try{
+
+    let posts = await Post.find({})
+    .populate('customer')
+    .populate({
+        path: 'comments',
+        populate:{
+            path: 'customer'
+        }
+    });
+
+    let customers = await Customer.find({});
+
+    return res.render("home_posts",{
+        title:" MediBook feed",
+        header:"Solution to all miseries",
+        posts:posts,
+        all_customers: customers
+    })
+
+}catch(err){
+
+    console.log("Error in reading posts from DB!", err);
+}
+
 }
 module.exports.destroy = function(req,res){
 
