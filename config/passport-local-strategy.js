@@ -3,16 +3,20 @@ const Customer = require('../models/customer');
 const LocalStrategy = require('passport-local').Strategy;
 
 passport.use(new LocalStrategy({
-    usernameField:'Email'             ///<<<<-------------------------    Since the project has Email field instead of username, so we use this to change it
-},function(Email,password,done){
+    usernameField:'Email',             ///<<<<-------------------------    Since the project has Email field instead of username, so we use this to change it
+    passReqToCallback: true            ///<<<<-------------------------    makes the request variable accessible in the passport
+
+},function(req, Email,password,done){   
 
     Customer.findOne({Email:Email},function(err,customer){
         if(err){
             console.log("Error in finding customer --> Passport");
+            req.flash('error',err);
             return done(err);
         }
         if(!customer || customer.password != password){
-            console.log("Incorrect Username / Password");
+            req.flash('error','Invalid Email Id/ Password')
+            //console.log("Incorrect Username / Password");
             return done(null,false,{message:"Incorrect Username / Password"});
         }
 

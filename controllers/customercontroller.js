@@ -82,11 +82,13 @@ module.exports.update = function(req,res){
 
 module.exports.createSession = function(req,res){
 
+    req.flash('success', "Successfully logged in!!!");
     return res.redirect('/');
 }
 
 module.exports.destroySession = function(req,res){
 
     req.logout();                                   //<<<<<<<<----------- This function is supplied by passport into the req
+    req.flash('success', "Successfully logged out!!!");
     return res.redirect('/');
 }

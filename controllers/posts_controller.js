@@ -9,11 +9,13 @@ module.exports.create = async function(req,res){
             customer:req.user._id
         });
         console.log("******",newPost);
+        req.flash('success','New Post Published!!');
         return res.redirect('back');
     }catch(err){
 
         console.log("Error",err);
-        return;
+        req.flash('error','Error in Publishing the Post');
+        return res.redirect('back');
     }
     
 
@@ -37,15 +39,18 @@ module.exports.destroy = async function(req,res){
             //     if(err){
             //         console.log(err,'Error in deleting post comments !!');
             //     }
+                req.flash('success','Post removed, successfully!!');
                 return res.redirect('back');
             //});
         }else{
 
+            req.flash('error',"Unauthorised, you can't delete this post!!");
             return res.redirect('back');           //<<<----- unauthorized
         }
     //})
     }catch(err){
         console.log("Error in deleting posts !!", err);
+        req.flash('error',"Error in deleting posts !!");
         return;
     }
 
