@@ -1,6 +1,7 @@
-<li>
+<!-- Doesn't matter if I'm using .id or _id we are just displaying it -->
+<li id="post-<%=post.id%>">     
     <% if(locals.customer && locals.customer.id == post.customer.id){%>
-    <a href="/posts/destroy/<%= post.id %>">X</a>
+    <a class="delete-post-button" href="/posts/destroy/<%= post.id %>">X</a>
     <%}%>
     <p>
         <%= post.customer.Name %><br>

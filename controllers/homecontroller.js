@@ -65,10 +65,11 @@ try{
     .populate('customer')
     .populate({
         path: 'comments',
+        options: { sort: '-createdAt' },
         populate:{
             path: 'customer'
         }
-    });
+    }).sort('-createdAt');                  //<<<<<<-------- For sorting the posts in reverse chronological order
 
     let customers = await Customer.find({});
 

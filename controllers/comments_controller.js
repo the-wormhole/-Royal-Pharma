@@ -27,8 +27,8 @@ module.exports.create = async function(req,res){
     }catch(err){
 
         console.log("Error in adding Comment",err);
-        req.flash('err','Error in adding Comment!');
-        return;
+        req.flash('error','Error in adding Comment!');
+        return res.redirect('back');
     }
     
     //console.log(req.body.post);
