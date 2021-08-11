@@ -10,7 +10,7 @@
     </p>
     <div class="post-comments">
         <% if(locals.customer){%>
-        <form action="/comments/create" method="POST" id = "new-comment-form">
+        <form action="/comments/create" method="POST" class = "new-comment-form">
             <textarea name="content" cols="30" rows = "3" placeholder="Type your comment here..."></textarea>
             <input type="hidden" name="post" value="<%= post._id %>">
             <input type="submit" value="Comment">

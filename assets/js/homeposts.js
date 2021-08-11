@@ -18,6 +18,8 @@
 
                     deletePost($(' .delete-post-button',newPost)); //<<---- Jquery method of searching for class 'delete-post-button' in newPost 
                            //<<-- the above line just adds the delete button to the newpost created no other post
+
+                           //addCreateComment();
                     new Noty({
                         theme: 'relax',
                         text: data.message,
@@ -29,10 +31,10 @@
                 
                 },
                 error:function(err){
-                    console.log(err.responseText);
+                    //console.log(err.responseText);
                     new Noty({
                         theme: 'relax',
-                        text: err.message ,
+                        text: err.responseText.message ,
                         type: 'error',
                         layout: 'topRight',
                         timeout: 1500
@@ -97,7 +99,7 @@
                     }).show();
 
                 },error:function(err){
-                    console.log(err.responseText);
+                    //console.log(err.responseText);
                     new Noty({
                         theme: 'relax',
                         text: err.message ,

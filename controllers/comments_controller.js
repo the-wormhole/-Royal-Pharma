@@ -1,5 +1,6 @@
 const Comment = require('../models/comments');
 const Post = require('../models/post');
+const Customer = require('../models/customer');
 
 module.exports.create = async function(req,res){
 
@@ -17,6 +18,18 @@ module.exports.create = async function(req,res){
 
             post.comments.push(comment);
             post.save();                //<<<----------- Updating the array of comments and saving it (functionality provided by mongoDB)
+            let customer = await Customer.findById(comment.customer)
+            if(req.xhr){
+
+                return res.status(200).json({
+                    data:{
+                        comment:comment,
+                        customer_name:customer.Name,
+                        post_id:req.body.post
+                    },
+                    message: 'Comment added successfully!'
+                });
+            }
 
             console.log(comment);
             req.flash('success','Comment added!');
@@ -27,6 +40,14 @@ module.exports.create = async function(req,res){
     }catch(err){
 
         console.log("Error in adding Comment",err);
+        if(req.xhr){
+
+            return res.status(400).json({
+                data:{
+                },
+                message: 'Error in adding comment!'
+            });
+        }
         req.flash('error','Error in adding Comment!');
         return res.redirect('back');
     }
