@@ -35,6 +35,7 @@ app.set('view engine','ejs');
 app.set('views','./views');
 
 app.use(express.static('assets'));
+app.use('/uploads',express.static(__dirname + '/uploads')); //<<-- Making the uploads folder available to the browser
 
 app.use(expressLayouts);
 app.set('layout extractStyles',true);

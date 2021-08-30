@@ -12,8 +12,12 @@
                 url: '/posts/create',
                 data: newPostform.serialize(),          ///<<<----- Converts form input data to json
                 success: function(data){
-                    let newPost = newPostDom(data.data.post,data.data.customer_name);
-
+                    let newPost = newPostDom(data.data.post,data.data.customer_name,data.data.avatar);
+                    $("<link/>",{
+                        rel:"stylesheet",
+                        type: "text/css",
+                        href: "/css/posts.css"
+                    }).appendTo("head");
                     $('#posts_container > ul').prepend(newPost);
 
                     deletePost($(' .delete-post-button',newPost)); //<<---- Jquery method of searching for class 'delete-post-button' in newPost 
@@ -48,14 +52,16 @@
 
     //method to create post in DOM
 
-    let newPostDom = function(post,name){
+    let newPostDom = function(post,name,avatar){
         // We can only use _id in javascript as .id is undefined in it 
-        return $(`<li id="post-${post._id}">     
+        return $(`
+        <head></head>
+        <li class="post-li" id="post-${post._id}">     
 
         <a class="delete-post-button" href="/posts/destroy/${ post._id }">X</a>
 
         <p>
-            ${name}<br>
+        <img src=${avatar} width="50px" height="50px"> ${name}<br>
             ${ post.content }
     
         </p>

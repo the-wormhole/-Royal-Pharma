@@ -1,8 +1,10 @@
 <% if(locals.customer.id == profile_customer.id){ %>
+<img alt="<%= profile_customer.Name%>" src="<%= profile_customer.avatar%>" width="200" height="300">
 <h3> Welcome!! <%= profile_customer.Name %></h3>
-<form action="/customer/update/<%= profile_customer.id %>" method="POST" > 
+<form action="/customer/update/<%= profile_customer.id %>" method="POST" enctype="multipart/form-data"> 
     Name : <input type = "text" placeholder="Your name.." value="<%= profile_customer.Name%>" name="Name" required><br>
     Email: &nbsp;<input type = "email" placeholder="Your Email.." value="<%= profile_customer.Email%>" name="Email" required><br><br>
+    Upload Profile picture <input type = "file" name = "avatar" placeholder="Profile picture..">
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit">Update</button>
 </form>
 <%}else{%>

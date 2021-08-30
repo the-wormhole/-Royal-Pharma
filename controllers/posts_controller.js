@@ -15,7 +15,8 @@ module.exports.create = async function(req,res){
             return res.status(200).json({
                 data:{
                     post:newPost,
-                    customer_name:customer.Name
+                    customer_name:customer.Name,
+                    avatar:customer.avatar
                 },
                 message:"Post Created!"
             });

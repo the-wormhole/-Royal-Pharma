@@ -1,7 +1,7 @@
 {
     //console.log('hey');
 
-    var createComment = function(createLink){
+    let createComment = function(createLink){
 
             $(createLink).submit(function(e){
                 e.preventDefault();
@@ -42,7 +42,7 @@
 
     }
 
-    var newCommentDom = function(comment,name){
+    let newCommentDom = function(comment,name){
 
         return $(`<li>
 
@@ -54,7 +54,7 @@
         </p>
     </li>`)
     }
-    var addCreateComment = function(){
+    let addCreateComment = function(){
         let newCommentForms = $('.new-comment-form');
         newCommentForms.each(function(){
             let self = $(this);

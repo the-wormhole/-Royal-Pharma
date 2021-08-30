@@ -1,4 +1,6 @@
 const Customer = require('../models/customer');
+const fs = require('fs');
+const path = require('path');
 //const homeController = require('./homecontroller');
 
 module.exports.profile = function(req,res){
@@ -68,16 +70,55 @@ module.exports.create = function(req,res){
     
 }
 
-module.exports.update = function(req,res){
+module.exports.update = async function(req,res){
 
+    // let id = req.params.id;
+    // if(req.user.id == id){
+    //     Customer.findByIdAndUpdate(id,req.body,function(err,customer){
+    //         return res.redirect('back');
+    //     });
+    // }else{
+    //     return res.status(401).send('Unauthorised');
+    // }
     let id = req.params.id;
-    if(req.user.id == id){
-        Customer.findByIdAndUpdate(id,req.body,function(err,customer){
-            return res.redirect('back');
-        });
+    // console.log(Customer.avatarPath);
+    // console.log(req.user.id,id);
+    if(req.user.id == req.params.id){
+
+        try{
+            let customer = await Customer.findById(id);
+            Customer.uploadedAvatar(req,res, async function(err){     //<<---  Since the form has an enctype as multiform so we can't access the req.body directly, we require this function for that purpose
+                
+                if(err){
+                    console.log('Error in Multer', err);
+                    req.flash('err', 'Error in Uploading file!');
+                }
+                customer.Name = req.body.Name;
+                customer.Email = req.body.Email;
+                if(req.file){
+                   // console.log(req.file);
+                    if(customer.avatar){        //<<-- Replacing avatar if it already exists
+                        //var p = customer.avatar;
+                        fs.unlinkSync(path.join(__dirname,"..",customer.avatar))
+
+                    }
+                    customer.avatar = Customer.avatarPath + '/' + req.file.filename;
+                }
+
+                customer.save();
+                req.flash('success',"Profile updated!");
+                return res.redirect('back');
+            });
+        }catch(err){
+            req.flash('error',err);
+            console.log(err);
+            return res.status(401).send('Unauthorised');
+        }
     }else{
+        req.flash('error','Unauthorised');
         return res.status(401).send('Unauthorised');
     }
+
 }
 
 module.exports.createSession = function(req,res){

@@ -1,10 +1,11 @@
 <!-- Doesn't matter if I'm using .id or _id we are just displaying it -->
-<li id="post-<%=post.id%>">     
+<link rel="stylesheet" href="/css/posts.css">
+<li class="post-li" id="post-<%=post.id%>">     
     <% if(locals.customer && locals.customer.id == post.customer.id){%>
     <a class="delete-post-button" href="/posts/destroy/<%= post.id %>">X</a>
     <%}%>
     <p>
-        <%= post.customer.Name %><br>
+      <img class="profile_pic" src="<%= post.customer.avatar%>" width="50px" height="50px">  <%= post.customer.Name %><br>
         <%= post.content %>
 
     </p>
