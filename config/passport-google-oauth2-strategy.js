@@ -5,8 +5,8 @@ const crypto = require('crypto'); //<<--- to Auto generate a password when using
 const Customer = require('../models/customer');
 
 passport.use(new googleStrategy({
-        clientID:"57707384665-a5eut5ie5vekrs6casio8cbt1octmuhb.apps.googleusercontent.com",
-        clientSecret:"mCHKe1scY7pT3g33GOs2aTmO",
+        clientID:process.env.GOOGLE_CLIENTID,
+        clientSecret:process.env.GOOGLE_SECRET,
         callbackURL:"http://localhost:8000/customers/auth/google/callback"
     },
     function(accessToken,refreshToken,profile,done){        //<<-------- accessToken is returned by google after authenticating him/her, refreshToken asks for a new Token if the  previous one expires
