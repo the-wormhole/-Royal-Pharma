@@ -1,4 +1,5 @@
 const port = 8000;
+const env = require('dot-env');
 const cookieParser = require('cookie-parser');
 const express = require('express');
 //const path = require('path');
@@ -11,6 +12,7 @@ const db = require('./config/mongoose');
 const session = require('express-session');     ///<<<---- encrypts the session cookie
 const passport = require('passport');
 const passportLocalStrategy = require('./config/passport-local-strategy');
+const googleStrategy = require('./config/passport-google-oauth2-strategy');
 const MongoStore = require('connect-mongo')(session);           //<<<<<<<<<------- Used to store session cookie in the DB
 const sassMiddleware = require('node-sass-middleware');
 const flash = require('connect-flash');

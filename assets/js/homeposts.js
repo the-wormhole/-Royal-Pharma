@@ -13,11 +13,11 @@
                 data: newPostform.serialize(),          ///<<<----- Converts form input data to json
                 success: function(data){
                     let newPost = newPostDom(data.data.post,data.data.customer_name,data.data.avatar);
-                    $("<link/>",{
-                        rel:"stylesheet",
-                        type: "text/css",
-                        href: "/css/posts.css"
-                    }).appendTo("head");
+                    // $("<link/>",{
+                    //     rel:"stylesheet",
+                    //     type: "text/css",
+                    //     href: "/css/posts.css"
+                    // }).appendTo("head");
                     $('#posts_container > ul').prepend(newPost);
 
                     deletePost($(' .delete-post-button',newPost)); //<<---- Jquery method of searching for class 'delete-post-button' in newPost 
@@ -45,6 +45,10 @@
                         
                     }).show();
                 }
+            }).done(function(){
+                $('.profile_pic').css('border-radius',' 50%');
+                $('.post-li').css('border-top', '1px solid black');
+                //console.log('here');
             });
 
         });
@@ -55,13 +59,13 @@
     let newPostDom = function(post,name,avatar){
         // We can only use _id in javascript as .id is undefined in it 
         return $(`
-        <head></head>
+
         <li class="post-li" id="post-${post._id}">     
 
         <a class="delete-post-button" href="/posts/destroy/${ post._id }">X</a>
 
         <p>
-        <img src=${avatar} width="50px" height="50px"> ${name}<br>
+        <img class="profile_pic" src=${avatar} width="50px" height="50px"> ${name}<br>
             ${ post.content }
     
         </p>
