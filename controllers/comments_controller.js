@@ -1,7 +1,7 @@
 const Comment = require('../models/comments');
 const Post = require('../models/post');
 const Customer = require('../models/customer');
-
+const CommentsMailer = require('../mailers/comments_mailer');
 module.exports.create = async function(req,res){
 
     try{
@@ -9,16 +9,21 @@ module.exports.create = async function(req,res){
         //,function(err,post){
 
         if(post){                           //<<<<<<<<<---------- Check if the post exists in the database
+
             let comment = await Comment.create({
                 content:req.body.content,
                 customer:req.user._id,
                 post:req.body.post
             });
             //,function(err,comment){
+            comment = await comment.populate('customer', 'Email').execPopulate();
 
             post.comments.push(comment);
             post.save();                //<<<----------- Updating the array of comments and saving it (functionality provided by mongoDB)
-            let customer = await Customer.findById(comment.customer)
+
+            CommentsMailer.newComment(comment);         //<<-------- Calling nodemailer for sending mail
+
+            let customer = await Customer.findById(comment.customer);
             if(req.xhr){
 
                 return res.status(200).json({

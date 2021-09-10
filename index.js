@@ -1,5 +1,5 @@
 const port = 8000;
-const env = require('dot-env');
+const env = require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const express = require('express');
 //const path = require('path');
