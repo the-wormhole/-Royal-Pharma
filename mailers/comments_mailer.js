@@ -1,7 +1,7 @@
 const nodeMailer = require('../config/nodemailer');
 
 exports.newComment = (comment) =>{
-    console.log('Inside newComments mailer!!!',process.env.EMAIL_PASSWORD);
+    console.log('Inside newComments mailer!!!');
     let HTMLstring = nodeMailer.renderTemplate({comment:comment},'/new_comment.ejs')
     nodeMailer.transporter.sendMail({
         from: 'nayan.agg13@gmail.com',
@@ -13,7 +13,7 @@ exports.newComment = (comment) =>{
             console.log('Error in sending email!',err);
             return;
         }
-        console.log('Message sent',info);
+        //console.log('Message sent',info);
         return;
     });
 

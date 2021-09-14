@@ -1,6 +1,8 @@
 const Comment = require('../models/comments');
 const Post = require('../models/post');
 const Customer = require('../models/customer');
+const queue = require('../config/kue');
+const commentEmailWorker = require('../workers/comment_email_workers');
 const CommentsMailer = require('../mailers/comments_mailer');
 module.exports.create = async function(req,res){
 
@@ -21,7 +23,12 @@ module.exports.create = async function(req,res){
             post.comments.push(comment);
             post.save();                //<<<----------- Updating the array of comments and saving it (functionality provided by mongoDB)
 
-            CommentsMailer.newComment(comment);         //<<-------- Calling nodemailer for sending mail
+            //CommentsMailer.newComment(comment);         //<<-------- Calling nodemailer for sending mail
+
+            let job = queue.create('emails',comment).save(function(err) {      //<<-- 'emails' is the name of the queue created by us in the workers folder and has been imported by us 
+                if(err){console.log('Error in creating a queue ');return;}             // <<-------- Initiating the worker for comments mailing
+                console.log('job enqueued ',job.id);
+            })
 
             let customer = await Customer.findById(comment.customer);
             if(req.xhr){
